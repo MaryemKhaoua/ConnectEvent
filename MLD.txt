@@ -1,0 +1,8 @@
+organisateur(id_org, nom, email, tel)
+organiser(id_org, id_event)
+participant(id_part, nom, email, tel)
+evenement(id_event, titre, date, description, #id_lieu)
+lieu(id_lieu, nom, adresse)
+sponsor(id_sponsor, nom)
+sponsorer(id_event, id_sponsor
+billet(id_billet, #id_event, #id_part)
