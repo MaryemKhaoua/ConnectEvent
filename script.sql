@@ -1,27 +1,19 @@
 -- creation des tableaux
 
-CREATE TABLE Organisateurs (
+CREATE TABLE IF NOT EXISTS Organisateurs (
     id_org INT PRIMARY KEY,
     nom VARCHAR(50),
     email VARCHAR(50),
     tel VARCHAR(15)
 );
 
-CREATE TABLE Organiser (
-    id_org INT  PRIMARY KEY,
-    id_event INT  PRIMARY KEY,
-    FOREIGN KEY (id_org) REFERENCES Organisateurs(id_org),
-    FOREIGN KEY (id_event) REFERENCES Evenements(id_event)
-);
-
-CREATE TABLE Participants (
-    id_part INT PRIMARY KEY,
+CREATE TABLE IF NOT EXISTS Lieux (
+    id_lieu INT PRIMARY KEY,
     nom VARCHAR(50),
-    email VARCHAR(50),
-    tel VARCHAR(15)
+    adresse VARCHAR(100)
 );
 
-CREATE TABLE Evenements (
+CREATE TABLE IF NOT EXISTS Evenements (
     id_event INT PRIMARY KEY,
     titre VARCHAR(100),
     date DATE,
@@ -30,25 +22,35 @@ CREATE TABLE Evenements (
     FOREIGN KEY (id_lieu) REFERENCES Lieux(id_lieu)
 );
 
-CREATE TABLE Lieux (
-    id_lieu INT PRIMARY KEY,
+CREATE TABLE IF NOT EXISTS Participants (
+    id_part INT PRIMARY KEY,
     nom VARCHAR(50),
-    adresse VARCHAR(100)
+    email VARCHAR(50),
+    tel VARCHAR(15)
 );
 
-CREATE TABLE Sponsors (
+CREATE TABLE IF NOT EXISTS Organiser (
+    id_org INT,
+    id_event INT,
+    PRIMARY KEY (id_org, id_event),
+    FOREIGN KEY (id_org) REFERENCES Organisateurs(id_org),
+    FOREIGN KEY (id_event) REFERENCES Evenements(id_event)
+);
+
+CREATE TABLE IF NOT EXISTS Sponsors (
     id_sponsor INT PRIMARY KEY,
     nom VARCHAR(50)
 );
 
-CREATE TABLE Sponsorer (
-    id_event INT PRIMARY KEY,
-    id_sponsor INT PRIMARY KEY,
+CREATE TABLE IF NOT EXISTS Sponsorer (
+    id_event INT,
+    id_sponsor INT,
     FOREIGN KEY (id_event) REFERENCES Evenements(id_event),
-    FOREIGN KEY (id_sponsor) REFERENCES Sponsors(id_sponsor)
+    FOREIGN KEY (id_sponsor) REFERENCES Sponsors(id_sponsor),
+    PRIMARY KEY (id_event, id_sponsor)
 );
 
-CREATE TABLE Billets (
+CREATE TABLE IF NOT EXISTS Billets (
     id_billet INT PRIMARY KEY,
     id_event INT,
     id_part INT,
